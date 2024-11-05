@@ -1,4 +1,4 @@
-# https://quartz.jzhao.xyz/hosting#github-pages
+# from: https://quartz.jzhao.xyz/hosting#github-pages
 name: Deploy Quartz site to GitHub Pages
  
 on:
