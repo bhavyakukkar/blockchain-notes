@@ -1,6 +1,5 @@
-# from: https://quartz.jzhao.xyz/hosting#github-pages
-name: Deploy Quartz site to GitHub Pages
- 
+name: Deploy Quartz site to GitHub Pages # from: https://quartz.jzhao.xyz/hosting#github-pages 
+
 on:
   push:
     branches:
