@@ -1,1 +1,1 @@
-Topics start [[topics/blockchain | here]]
+Topics start [[Blockchain | here]]
