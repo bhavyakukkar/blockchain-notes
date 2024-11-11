@@ -9,7 +9,7 @@
 - If Helios knows the makeup of the current sync committee, it can confidently track the head of the chain by asking an untrusted RPC for the most recent sync committee signature
 
 # Components
-- There are 5 important crates in the `helios` package workspace:
+There are 5 important crates in the `helios` package workspace
 | **Crate**        | **Description**                                                                                                                |
 |------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | `cli`            | CLI to start helios for the desired chain; entry binary                                                                        |
