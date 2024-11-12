@@ -76,6 +76,8 @@ The main ethereum blockchain (called the `mainnet`) can only handle ~15 transact
 
 
 ### Optimistic Rollups
+- Optimistic rollups, when sending the bundled transactions, assume that all the transactions are valid and accurate unless disputed via `fraud proofs`
+- **Fraud Proof:** A full node, upon seeing an invalid state transition being gossiped around the network, could quickly generate a small piece of data demonstrating that a proposed state transition could not possibly arise from a given set of transactions and broadcast that data to peers
 - Popular Optimistic Rollups include [Arbitrum](https://docs.arbitrum.io/intro/glossary#arbitrum-rollup-protocol), [Base](https://docs.base.org/docs/terms-of-service/#1-base-and-bridging-smart-contracts) & [Optimism](https://docs.optimism.io/stack/rollup)
 
 ### Zero-Knowledge Rollups
@@ -126,6 +128,7 @@ The main ethereum blockchain (called the `mainnet`) can only handle ~15 transact
 - Using the JSON-RPC, the following will fetch the number of the most recent block in the Ethereum network (using an RPC node provided by Alchemy) `curl https://eth-mainnet.g.alchemy.com/v2/<YOUR-API-KEY> -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_blockNumber","id":0}'`
 - [Specifications](https://github.com/ethereum/execution-apis)
 - [JSON-RPC Spec](https://ethereum.github.io/execution-apis/api-documentation/)
+- [How to verify a proof received from the `eth_getProof` RPC method](https://github.com/ethereum/EIPs/issues/1186#issuecomment-401161169)
 
 
 ## Consensus Client
