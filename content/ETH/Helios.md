@@ -10,13 +10,14 @@
 
 
 # How Does it Work?
-- Its consensus-layer uses a previously known [[Ethereum#Proof of Stake|beacon-chain]] blockhash and a connection to an untrusted RPC (to receive a current blockhash) to verifiably sync to the current block
-- Its execution-layer uses the authenticated beacon-chain blocks with the untrusted execution-layer RPC to prove arbitrary information about the chain state such as account balances, contract storage, transaction receipts and smart-contract call results using `Merkle Proofs`.
+- Its consensus-layer gets a previously known [[Ethereum#Proof of Stake|beacon-chain]] blockhash from a trusted `consensus client RPC endpoint` and a connection to an `untrusted execution client RPC endpoint`, to verifiably sync to the current block by proving arbitrary information about the chain state such as account balances, contract storage, transaction receipts and smart-contract call results
 - If Helios knows the makeup of the current sync committee, it can confidently track the head of the chain by asking an untrusted RPC for the most recent sync committee signature
 - Once synced, [various Ethereum RPC methods](https://github.com/a16z/helios/blob/master/rpc.md) can be used on the local RPC simulated by helios
 
 
 ## Example Tracelog
+
+Ethereum:
 ```
 $ helios ethereum --execution-rpc https://eth-mainnet.g.alchemy.com/v2/<API_KEY>
 
@@ -42,6 +43,30 @@ $ helios ethereum --execution-rpc https://eth-mainnet.g.alchemy.com/v2/<API_KEY>
 2024-11-13T09:11:52.487063Z  INFO helios::consensus: updated head               slot=10388756  confidence=99.80%  age=00:00:00:17
 2024-11-13T09:11:58.776081Z  INFO helios::runner: shutting down... press ctrl-c 2 more times to force quit
 2024-11-13T09:11:58.816012Z  INFO helios::client: shutting down
+```
+
+Optimism:
+```
+$ helios opstack --network optimism --execution-rpc https://optimism-mainnet.public.blastapi.io
+
+2024-11-13T10:30:40.647005Z  INFO helios::rpc: rpc server started at 127.0.0.1:8545
+2024-11-13T10:30:43.142556Z  INFO helios_opstack::consensus: unsafe head updated: block=127947532 age=2s
+2024-11-13T10:30:50.987552Z  INFO helios_opstack::consensus: unsafe head updated: block=127947536 age=1s
+2024-11-13T10:30:51.826510Z  INFO helios_core::execution::state: backfilled: block=127947535
+2024-11-13T10:30:52.224873Z  INFO helios_core::execution::state: backfilled: block=127947534
+2024-11-13T10:30:52.734938Z  INFO helios_core::execution::state: backfilled: block=127947533
+2024-11-13T10:30:52.841325Z  INFO helios_opstack::consensus: unsafe head updated: block=127947537 age=1s
+2024-11-13T10:30:54.902852Z  INFO helios_opstack::consensus: unsafe head updated: block=127947538 age=1s
+...
+2024-11-13T10:31:20.549098Z  INFO helios_opstack::consensus: unsafe head updated: block=127947551 age=1s
+2024-11-13T10:31:28.141499Z  INFO helios_opstack::consensus: unsafe head updated: block=127947554 age=2s
+2024-11-13T10:31:28.795196Z  INFO helios_core::execution::state: backfilled: block=127947553
+2024-11-13T10:31:28.992555Z  INFO helios_opstack::consensus: unsafe head updated: block=127947555 age=1s
+2024-11-13T10:31:29.158332Z  INFO helios_core::execution::state: backfilled: block=127947552
+2024-11-13T10:31:31.464082Z  INFO helios_opstack::consensus: unsafe head updated: block=127947556 age=2s
+...
+2024-11-13T10:31:46.582418Z  INFO helios_opstack::consensus: unsafe head updated: block=127947564 age=1s
+2024-11-13T10:31:49.593729Z  INFO helios_opstack::consensus: unsafe head updated: block=127947565 age=2s
 ```
 
 
