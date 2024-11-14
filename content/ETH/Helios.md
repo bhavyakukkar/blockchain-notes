@@ -15,7 +15,105 @@
 - Once synced, [various Ethereum RPC methods](https://github.com/a16z/helios/blob/master/rpc.md) can be used on the local RPC simulated by helios
 
 
-## Example Tracelog
+
+# Crates
+There are 5 crates in the `helios` package workspace
+
+| *Crate* | *Description* |
+| ------- | ------------- |
+| `cli` | Command-line-interface to run helios for the desired chain (`ethereum` or `optimism` or `base`) and with the desired configuration overrides; this is what is built when using `heliosup` |
+| `core` | Core logic & state of the consensus-layers & execution-layers of helios, including traits to be implemented for any new __network__, __consensus__ and __execution rpc endpoints__ |
+| `ethereum` | Implementation-specific logic to implement `core` for ethereum chains, with implementations of core's __network__ & __consensus__ |
+| `consensus-core` | Implementation-specific logic for consensus specification for the `ethereum` network |
+| `opstack` | Implementation-specific logic to implement `core` for opstack L2 chains `optimism` and `base`, with implementations of core's __network__ & __consensus__ |
+
+
+
+# Types in Helios Core
+The important types that need to be implemented or communicated with for a new chain or protocol, listed in order from primitive to complex types:
+
+
+> ## 1. Network Specification
+> | | |
+> |-|-|
+> | __where:__ | `trait NetworkSpec` in `core/src/network_spec.rs` |
+> | __implemented for:__ | <ul><li>`Ethereum` in `ethereum/src/spec.rs`</li><li>`OpStack` in `opstack/src/spec.rs`</li></ul> |
+> | __what to implement:__ |<ul> <li>`fn encode_receipt()`</li> <li>`fn receipt_contains()`</li> <li>`fn receipt_logs()`</li> <li>`fn tx_env()`</li> <li>`fn block_env()`</li> </ul> |
+> 
+> 
+> ## 2. Consensus
+> | | |
+> |-|-|
+> | __where:__ | `trait Consensus` in `core/src/consensus.rs` |
+> | __determined by:__ | `network-spec` (specifically the type of its `transaction-response`) |
+> | __implemented for:__ |<ul> <li>`ConsensusClient` in `ethereum/src/consensus.rs`</li> <li>`ConsensusClient` in `opstack/src/consensus.rs`</li> </ul>|
+> 
+> 
+> ## 3. Execution Types
+> <details>
+>   <summary>Types relevant to execution</summary>
+> 
+> > ### a. Execution RPC
+> > | | |
+> > |-|-|
+> > | __where:__ | `trait ExecutionRpc` in `core/src/execution/rpc/mod.rs` |
+> > | __determined by:__ | `network-spec` (specifically the type of its `transaction-request`) |
+> > | __implemented for:__ |<ul> <li>`HttpRpc` in `core/src/execution/rpc/http_rpc.rs`</li> <li>`MockRpc` in `core/src/execution/rpc/mock_rpc.rs`</li> </ul>|
+> > 
+> > 
+> > ### b. Execution Client
+> > | | |
+> > |-|-|
+> > | __where:__ | `struct ExecutionClient` in `core/src/execution/mod.rs` |
+> > | __contains:__ | an `rpc` and a `state` |
+> > | __determined by:__ | `network-spec` (because it determines both `rpc` and `state`) |
+> > 
+> > 
+> > ### c. Inner
+> > | | |
+> > |-|-|
+> > | __where:__ | `struct Inner` in `core/src/execution/state.rs` |
+> > | __determined by:__ |<ul> <li>`network-spec` (specifically the type of its `transaction-response`)</li> <li>`execution-rpc` (any implemented `execution-rpc` that also uses the chosen implementation of `network-spec`)</li> </ul>|
+> > | __contains:__ |<ul> <li>`blocks`: `TODO`</li> <li>`finalized_block`: `TODO`</li> <li>`hashes`: `TODO`</li> <li>`txs`: `TODO`</li> <li>`history_length`: `TODO`</li> <li>`rpc`: `TODO`</li> </ul>|
+> > 
+> > 
+> > ### d. State
+> > | | |
+> > |-|-|
+> > | __where:__ | `struct State` in `core/src/execution/state.rs` |
+> > | __contains:__ | reference to a shared `inner` |
+> > | __determined by:__ | `network-spec` (because it determines `inner`) |
+> 
+> </details>
+> 
+> ---
+> 
+> ## 4. Node
+> | | |
+> |-|-|
+> | __determined by:__ |<ul> <li>`network-spec` (because it determines `execution-client`)</li> <li>`consensus` (any implemented `consensus` that also uses the chosen implementation of `network-spec`'s transaction-response)</li> </ul>|
+> | __where:__ | `struct Node` in `core/src/client/node.rs` |
+> | __contains:__ | an `execution client` and a `consensus` |
+> 
+> 
+> ## 5. RPC
+> | | |
+> |-|-|
+> | __where:__ | `struct Rpc` in `core/src/client/rpc.rs` |
+> | __contains:__ | reference to a shared `node` |
+> | __determined by:__ |<ul> <li>`network-spec` (because it determines `node`)</li> <li>`consensus` (any implemented `consensus` that also uses the chosen implementation of `network-spec`'s transaction-response)</li> </ul>|
+> 
+> 
+> ## 6. Client
+> | | |
+> |-|-|
+> | __where:__ | `struct Client` in `core/src/client/mod.rs` |
+> | __contains:__ | reference to a shared `node` and an `rpc` |
+> | __determined by:__ |<ul> <li>`network-spec` (because it determines `node` and `rpc`)</li> <li>`consensus` (any implemented `consensus` that also uses the chosen implementation of `network-spec`'s transaction-response)</li> </ul>|
+
+
+
+# Example Tracelog
 
 Ethereum:
 ```
@@ -68,34 +166,3 @@ $ helios opstack --network optimism --execution-rpc https://optimism-mainnet.pub
 2024-11-13T10:31:46.582418Z  INFO helios_opstack::consensus: unsafe head updated: block=127947564 age=1s
 2024-11-13T10:31:49.593729Z  INFO helios_opstack::consensus: unsafe head updated: block=127947565 age=2s
 ```
-
-
-
-# Components
-There are 5 crates in the `helios` package workspace:
-
-
-## cli
-- Command-line-interface to run helios for the desired chain (`ethereum` or `optimism` or `base`) and with the desired configuration overrides
-- Entry binary, this is what is built when using `heliosup`
-
-
-## core
-- Core logic of `helios`
-- trait `Consensus` to be implemented for consensus clients with notable methods:
-  + `block_recv`: receive blocks being received by the client
-  + `finalized_block_recv`: receive `finalized` blocks being received by the client
-
-
-## ethereum
-- Implementation-specific logic to implement `core` for connections to the mainnet chain
-- Implements trait `Consensus` for struct `ConsensusClient`
-
-
-## consensus-core
-- Ethereum-specific consensus logic
-
-
-## opstack
-- Implementation-specific logic to implement `core` for connections to the op-stack L2 chains `optimism` and `base`
-- Implements trait `Consensus` for struct `ConsensusClient`
