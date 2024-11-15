@@ -25,6 +25,23 @@
   5. at least 50% of the blocks returned by an invocation of `read_causal(d)` were written by honest parties
 
 
+# Source Code
+Analysis of source of a reference implementation of Narwhal-Tusk written by Alberto Sonnino, one of the authors of the whitepaper:
+
+## Crates
+
+| **Crate** | **Description** |
+| --------- | --------------- |
+| [node](https://github.com/facebookresearch/narwhal/blob/main/node/src/main.rs#L18) | Main entry point binary cli (node/src/main.rs) that can either [generate keys](https://github.com/facebookresearch/narwhal/blob/main/node/src/main.rs#L59), [spawn a primary process](https://github.com/facebookresearch/narwhal/blob/main/node/src/main.rs#L100) (which also starts a consensus thread to run the Tusk consensus protocol) or [spawn a worker process](https://github.com/facebookresearch/narwhal/blob/main/node/src/main.rs#L124) |
+| [primary](https://github.com/facebookresearch/narwhal/blob/main/primary/src/primary.rs#L61) | Contains the logic to start the primary process which listens for connections [from its workers](https://github.com/facebookresearch/narwhal/blob/main/primary/src/primary.rs#L110) and [primary nodes on other validators](https://github.com/facebookresearch/narwhal/blob/main/primary/src/primary.rs#L91) `TODO`|
+| [worker](https://github.com/facebookresearch/narwhal/blob/main/worker/src/worker.rs#L42) | Contains the logic to start the worker process with logic to handle messages [from client transactions](https://github.com/facebookresearch/narwhal/blob/main/worker/src/worker.rs#L137), [from workers on other validators](https://github.com/facebookresearch/narwhal/blob/main/worker/src/worker.rs#L197), and finally [from the primary on the same validator](https://github.com/facebookresearch/narwhal/blob/main/worker/src/worker.rs#L102) `TODO`|
+| [consensus](https://github.com/facebookresearch/narwhal/blob/main/consensus/src/lib.rs#L63) | Contains the logic for the Tusk consensus protocol `TODO` |
+| [store](https://github.com/facebookresearch/narwhal/blob/main/store/src/lib.rs#L23) | `TODO` |
+| [network](https://github.com/facebookresearch/narwhal/tree/main/network/src) | `Utility` library for abstracting message sending ([unreliable](https://github.com/facebookresearch/narwhal/blob/main/network/src/simple_sender.rs#L20) and [reliable](https://github.com/facebookresearch/narwhal/blob/main/network/src/reliable_sender.rs#L27)) and [message receiving](https://github.com/facebookresearch/narwhal/blob/main/network/src/receiver.rs#L29) over a TCP stream |
+| [crypto](https://github.com/facebookresearch/narwhal/blob/main/crypto/src/lib.rs) | `Utility` library for cryptography-relevant types and functions (Digest, Hash, PublicKey & SecretKey, generate_production_keypair, generate_keypair, Signature & SignatureService) |
+| [config](https://github.com/facebookresearch/narwhal/blob/main/config/src/lib.rs#L62) | Logic to read & deserialize a JSON config file to configure Narwhal, including the [Committee composition](https://github.com/facebookresearch/narwhal/blob/main/config/src/lib.rs#L141) | 
+
+
 # Links
 - [Narwhal and Tusk: A DAG-based Mempool and Efficient BFT Consensus](https://arxiv.org/pdf/2105.11827)
 - [ConsensusDays 21 / S1.4 / Narwhal and Tusk - Alberto Sonnino](https://www.youtube.com/watch?v=K5ph4-7vvHk)
