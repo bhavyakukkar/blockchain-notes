@@ -81,7 +81,7 @@ The main ethereum blockchain (called the `mainnet`) can only handle ~15 transact
 - Popular Optimistic Rollups include [Arbitrum](https://docs.arbitrum.io/intro/glossary#arbitrum-rollup-protocol), [Base](https://docs.base.org/docs/terms-of-service/#1-base-and-bridging-smart-contracts) & [Optimism](https://docs.optimism.io/stack/rollup)
 
 ### Zero-Knowledge Rollups
-- Tying back into the concept of [[Proofs#Zero Knowledge Proofs]], these are rollups that use ZKPs to attach a proof of the consensus to the rollups which the target L1 branch can verify
+- Tying back into the concept of [[ZKP/Zero Knowledge Proofs]], these are rollups that use ZKPs to attach a proof of the consensus to the rollups which the target L1 branch can verify
 - Rollups consist of `Prover` nodes that generate proofs about the input transactions and the resultant change in the state, whereby a smart-contract on the beacon chain can act as a verifier to verify the proof and add the sum transaction upon successful verification
 - [Ethereum Scaling: ZK Roll-Ups](https://www.youtube.com/watch?v=3C0g-60bAWc)
 - Popular ZK Rollups include [Scroll](https://docs.scroll.io/en/learn/)
