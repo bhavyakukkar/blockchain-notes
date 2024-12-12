@@ -14,9 +14,13 @@
   + **Succinct:** For a non-interactive argument-of-knowledge to be succinct:
     + The proof $\pi$ must be "short", have an at-most logarithmic complexity to the size of the circuit $|C|$
     + The time complexity to verify the proof must be at-most logarithmic to the size of the circuit $|C|$, and at-most linear to the size of the statement $|x|$
-- A simple SNARK could involve $P$ sending the witness $w$ itself to $V$, but there are security concerns with a dishonest verifier obtaining the witness $w$.
+- A simple SNARK could involve $P$ sending the witness $w$ itself to $V$ (called the **trivial argument system**), but there are concerns related to this:
+  + $w$ might be a secret that $P$ does not wish to reveal
+  + $w$ might be too long, and the proof might no longer be succinct
+- 
 - zkSNARK is a SNARK that has the added quality of being zero-knowledge, i.e., the proof received by $V$ does not reveal any information the witness $w$.
 
+- [Vitalik Buterin - Quadratic Arithmetic Programs: from Zero to Hero](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649)
 - [Lecture 10.3: What is a zk-SNARK?](https://www.youtube.com/watch?v=gcKCW7CNu_M)
 - <https://blog.jarrodwatts.com/how-zk-proofs-and-zkevms-work>
 - [How zkVM/zkMIPS works. (by ZKM)](https://www.youtube.com/watch?v=cfHB9X_Dr1Q)
