@@ -1,7 +1,8 @@
 
 - A _**Z**ero-**k**nowledge **V**irtual **M**achine_ is a virtual-machine that, besides executing programs, also produces a [[ZKP/Zero Knowledge Proofs|zero-knowledge proof]] of their execution. It is a more general form of a **zkEVM** which only executes and proves the execution of Ethereum transactions and contracts on its state trie.
 
-- **sp1** is a **zkVM** that can prove the execution of programs in the `RISC-V` instruction-set. It also provides a library and toolchain to ease the creation of programs from programs written in Rust
+- **sp1** is a **zkVM** developed by the **Succinct Labs** foundation, that can prove the execution of programs in the `RISC-V` instruction-set. It also provides a library and toolchain to ease the creation of programs from programs written in Rust
+- Other popular zkVM's that operate on RISC-V are (RISC Zero)[https://dev.risczero.com/api/zkvm/] and (Jolt)[https://jolt.a16zcrypto.com/] developed by **a16z**
 - Uses a custom toolchain to compile programs (whose execution will be proven) written in Rust to `RISC-V` instructions, which can then be executed in the sp1 zkVM to generate a proof of their execution
 
 | **Si** | **Stage**                       | **Description** |
