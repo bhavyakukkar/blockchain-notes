@@ -33,16 +33,6 @@
 - Transactions made to a contract-account expect the name of the called function and its input parameters in the `data` field of the transaction so that the contract may be invoked
 
 
-## Account Abstraction
-Before the abstract of an `account` introduced in [ERC-4337](https://eips.ethereum.org/EIPS/eip-4337), the authorization process included checking only the following:
-1. Account's key pair (elliptive-curve cryptography or ECDSA)
-2. Account's nonce (Number-once)
-3. Account's balance (prevention of overspending)
-
-However, the `account` abstraction was introduced, without any changes to the consensus protocol, to allow "pseudo-transactions" called `UserOperations` that end up being executed from a separate mempool into packages called `bundle transactions` by a special class of actors called `bundlers` after they make a call to the `EntryPoint` contract.
-
-
-
 # Smart Contracts
 - A stateful program that can be the recipient to decentralized transactions, where the parameters and results of the invoked program then get recorded into the blockchain
 - [Example of sample Ethereum Smart-contract account](https://etherscan.io/address/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)
@@ -87,10 +77,13 @@ The main ethereum blockchain (called the `mainnet`) can only handle ~15 transact
 - Popular ZK Rollups include [Scroll](https://docs.scroll.io/en/learn/)
 
 
-## Sharding
-`TODO`
-- [Danksharding](https://ethereum.org/en/roadmap/danksharding/)
-- [EIP-4844](https://eips.ethereum.org/EIPS/eip-4844)
+## EIPs
+EIPs (Ethereum Improvement Proposals) are documents proposing improvements for the Ethereum specification and its sub-specifications. Since Ethereum is a decentralized network, these proposals are the only source of development on the Ethereum which is a specification. Developers of ethereum implementations like Geth and Erigon follow EIPs closely so that any proposals agreed upon by the community may be implemented. EIPs, once closed, are given a selected duration for all clients to implement it, usually decided by a future block-number.
+
+Notes on various EIPs:
++ [[ETH/EIPs/ERC-4337]]: Account Abstraction
++ [[ETH/EIPs/EIP-4844]]: Shard Blob Transactions (Proto-danksharding)
+
 
 
 ## Bridges
