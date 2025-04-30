@@ -83,6 +83,7 @@ EIPs (Ethereum Improvement Proposals) are documents proposing improvements for t
 Notes on various EIPs:
 + [[ETH/EIPs/ERC-4337]]: Account Abstraction
 + [[ETH/EIPs/EIP-4844]]: Shard Blob Transactions (Proto-danksharding)
++ [[ETH/EIPs/EIP-225]]: Clique proof-of-authority consensus protocol
 
 
 
