@@ -103,8 +103,7 @@ Notes on various EIPs:
 - Only requests necessary data from a provider (full node or centralized RPC server)
 - Only processes block headers, but occasionally downloads block contents
 - [First Light-Client specification commit authored by Vitalik Buterin](https://github.com/ethereum/consensus-specs/commit/1f210fd1f84c00b7005915914f0ae8e94b18cd12)
-- [Altair Light-client specification (renamed from the first light-client specification after new versions came along)](https://github.com/ethereum/consensus-specs/blob/dev/specs/altair/light-client/sync-protocol.md)
-
+- [[ETH/Specs/Altair Light Client|Altair Light-client specification]]
 
 ## Full Client
 `TODO`

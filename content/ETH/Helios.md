@@ -1,7 +1,7 @@
 
 
 - [[Ethereum#Light Client|light client]] for [[Ethereum]] written in Rust
-- Implements the [[Ethereum#Light Client|Altair light-client]] specification which introduces a specification for a client that is able to sync with the chain without the need of the `active validator set` with the help of a `sync committee` - a list of validators that is tracked per block in the [[Ethereum#State|beacon state]]
+- Implements the [[ETH/Specs/Altair Light Client|Altair light-client]] specification which introduces a specification for a client that is able to sync with the chain without the need of the `active validator set` with the help of a `sync committee` - a list of validators that is tracked per block in the [[Ethereum#State|beacon state]]
 - Supports both `Ethereum mainnet` as well as `Optimism` and `Base` L2 opstack rollup chains
 - [Article on Building Helios by its author](https://a16zcrypto.com/posts/article/building-helios-ethereum-light-client/)
 - Depends on the [[Ethereum#Alloy]] library & the [[Ethereum#revm]] library
